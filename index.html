@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бағдарламашы Мамандығы</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#0f172a', secondary: '#7C3AED' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f172a, #7C3AED, #9333EA, #6D28D9);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glow {
+            position: relative;
+        }
+
+        .glow::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(45deg, #7C3AED, #9333EA, #6D28D9);
+            filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .glow:hover::after {
+            opacity: 0.5;
+        }
+
+        .animated-border {
+            position: relative;
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(45deg, #7C3AED, #9333EA, #6D28D9);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .animated-border:hover::before {
+            opacity: 1;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            animation: slideInFromLeft 1s ease-out forwards;
+        }
+
+        .slide-in-right {
+            animation: slideInFromRight 1s ease-out forwards;
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .skill-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-card:hover {
+            background-color: #0f172a;
+            color: white;
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .skill-card:hover i {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #0f172a;
+            border-radius: 50%;
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .career-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .career-card:hover {
+            transform: scale(1.03) translateX(10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .career-card:hover .timeline-dot {
+            transform: translateY(-50%) scale(1.5);
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.2);
+        }
+
+        input,
+        textarea {
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #0f172a;
+            border-width: 2px;
+            outline: none;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-4px) scale(1.1);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-900">
+    <!-- Header -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-xl z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-['Pacifico'] text-2xl text-primary relative group">
+                    <span class="relative z-10">logo</span>
+                    <div
+                        class="absolute -bottom-1 left-0 w-0 h-1 bg-primary/20 group-hover:w-full transition-all duration-300">
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center space-x-2">
+                    <a href="#intro"
+                        class="px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-full transition-all duration-300">Кіріспе</a>
+                    <a href="#skills"
+                        class="px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-full transition-all duration-300">Дағдылар</a>
+                    <a href="#benefits"
+                        class="px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-full transition-all duration-300">Артықшылықтар</a>
+                    <a href="#career"
+                        class="px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-full transition-all duration-300">Мансап</a>
+                    <a href="#contact"
+                        class="ml-2 px-6 py-2 bg-primary text-white !rounded-button hover:shadow-lg hover:scale-105 transition-all duration-300">Байланыс</a>
+                </nav>
+                <button
+                    class="md:hidden w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded-full transition-all duration-300">
+                    <i class="ri-menu-line ri-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Mobile Menu -->
+    <div class="fixed inset-0 bg-white z-40 hidden flex-col pt-20 px-6">
+        <a href="#intro" class="py-4 border-b border-gray-100 text-gray-800">Кіріспе</a>
+        <a href="#skills" class="py-4 border-b border-gray-100 text-gray-800">Дағдылар</a>
+        <a href="#benefits" class="py-4 border-b border-gray-100 text-gray-800">Артықшылықтар</a>
+        <a href="#career" class="py-4 border-b border-gray-100 text-gray-800">Мансап</a>
+        <a href="#contact" class="py-4 border-b border-gray-100 text-gray-800">Байланыс</a>
+    </div>
+    <!-- Hero Section -->
+    <section id="intro" class="min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-10">
+                <source src="https://public.readdy.ai/gen_page/coding_bg.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-white/90 backdrop-blur-sm"></div>
+        <div class="container mx-auto px-4 w-full relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 fade-in space-y-8">
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">Болашақ
+                                мамандығы</span>
+                            <span
+                                class="inline-block px-4 py-1 bg-secondary/10 text-secondary rounded-full text-sm font-medium">2025
+                                жылдың трендтері</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight">Бағдарламашы
+                            <span class="text-gray-900">Мамандығы</span></h1>
+                        <p class="text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed">Цифрлық әлемнің сәулетшісі
+                            болыңыз. Бағдарламашы мамандығы - бұл болашақтың технологияларын жасаудың және әлемді
+                            өзгертудің мүмкіндігі. Біз сізге заманауи технологияларды меңгеруге және IT саласында
+                            табысты мансап құруға көмектесеміз.</p>
+                        <div class="flex items-center gap-6 text-gray-500">
+                            <div class="flex items-center gap-2">
+                                <i class="ri-user-star-line ri-lg"></i>
+                                <span>5000+ түлек</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="ri-building-line ri-lg"></i>
+                                <span>200+ серіктес компания</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="ri-award-line ri-lg"></i>
+                                <span>98% жұмысқа орналасу</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#skills"
+                            class="group relative bg-primary text-white px-8 py-4 !rounded-button whitespace-nowrap hover:shadow-xl transition-all duration-300 hover:scale-105">
+                            <span class="relative z-10">Көбірек білу</span>
+                            <div
+                                class="absolute inset-0 bg-white rounded-button scale-0 group-hover:scale-100 transition-transform duration-300">
+                            </div>
+                            <span
+                                class="absolute inset-0 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">Көбірек
+                                білу</span>
+                        </a>
+                        <a href="#contact"
+                            class="relative overflow-hidden border-2 border-primary text-primary px-8 py-4 !rounded-button whitespace-nowrap hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                            <span class="relative z-10">Байланысу</span>
+                            <div
+                                class="absolute inset-0 bg-primary -translate-x-full hover:translate-x-0 transition-transform duration-300">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center fade-in float-animation">
+                    <img src="https://readdy.ai/api/search-image?query=minimalist%2520illustration%2520of%2520a%2520programmer%2520working%2520on%2520computer%2520code%252C%2520simple%2520black%2520line%2520art%2520on%2520white%2520background%252C%2520clean%2520geometric%2520shapes%252C%2520abstract%2520representation%2520of%2520coding%2520and%2520software%2520development%252C%2520modern%2520tech%2520aesthetic&width=600&height=600&seq=2&orientation=squarish"
+                        alt="Бағдарламашы"
+                        class="max-w-full h-auto object-top hover:scale-105 transition-transform duration-300">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-5">
+                <source src="https://public.readdy.ai/gen_page/tech_pattern.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 fade-in">
+                <span
+                    class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">Кәсіби
+                    дағдылар</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Негізгі Дағдылар</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Заманауи бағдарламашы меңгеруі тиіс негізгі
+                    технологиялар мен программалау тілдері. Біздің оқу бағдарламамыз нарықтың қазіргі талаптарына сай
+                    жасалған және үнемі жаңартылып отырады.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="skill-card glass-effect p-8 rounded-lg hover-lift animated-border fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-gray-100 rounded-full">
+                        <i class="ri-code-s-slash-line ri-2x"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Программалау Тілдері</h3>
+                    <p class="text-gray-600">JavaScript, Python, Java, C++, PHP, Swift және басқа да көптеген тілдер
+                        арқылы әртүрлі платформаларға арналған қосымшалар жасау.</p>
+                </div>
+                <div class="skill-card glass-effect p-8 rounded-lg hover-lift animated-border fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-gray-100 rounded-full">
+                        <i class="ri-database-2-line ri-2x"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Деректер Базасы</h3>
+                    <p class="text-gray-600">SQL және NoSQL деректер базаларымен жұмыс жасау дағдылары: MySQL,
+                        PostgreSQL, MongoDB, Redis және т.б.</p>
+                </div>
+                <div class="skill-card glass-effect p-8 rounded-lg hover-lift animated-border fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-gray-100 rounded-full">
+                        <i class="ri-layout-grid-line ri-2x"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Фронтенд Технологиялар</h3>
+                    <p class="text-gray-600">HTML, CSS, JavaScript және React, Angular, Vue.js сияқты фреймворктар
+                        арқылы интерактивті пайдаланушы интерфейстерін құру.</p>
+                </div>
+                <div class="skill-card glass-effect p-8 rounded-lg hover-lift animated-border fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-gray-100 rounded-full">
+                        <i class="ri-server-line ri-2x"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Бэкенд Әзірлеу</h3>
+                    <p class="text-gray-600">Node.js, Django, Ruby on Rails, Spring және басқа да серверлік
+                        технологиялармен жұмыс жасау.</p>
+                </div>
+                <div class="skill-card glass-effect p-8 rounded-lg hover-lift animated-border fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-gray-100 rounded-full">
+                        <i class="ri-cloud-line ri-2x"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Бұлттық Технологиялар</h3>
+                    <p class="text-gray-600">AWS, Google Cloud, Microsoft Azure сияқты бұлттық платформаларда
+                        қосымшаларды орналастыру және масштабтау.</p>
+                </div>
+                <div class="skill-card glass-effect p-8 rounded-lg hover-lift animated-border fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-gray-100 rounded-full">
+                        <i class="ri-git-branch-line ri-2x"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">DevOps</h3>
+                    <p class="text-gray-600">Git, Docker, Kubernetes, CI/CD құралдары арқылы әзірлеу процестерін
+                        автоматтандыру және оңтайландыру.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Benefits Section -->
+    <section id="benefits"
+        class="py-20 bg-gradient-to-br from-primary via-secondary to-purple-800 text-white relative overflow-hidden">
+        <div class="absolute inset-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-20 mix-blend-overlay">
+                <source src="https://public.readdy.ai/gen_page/particles.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_-20%,rgba(255,255,255,0.1),transparent_70%)]">
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 fade-in">
+                <span
+                    class="inline-block px-4 py-1 bg-white/10 text-white rounded-full text-sm font-medium mb-4">Мансаптық
+                    мүмкіндіктер</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Бағдарламашы Мамандығының Артықшылықтары</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">Бағдарламалау саласы ұсынатын бірегей мүмкіндіктер
+                    мен артықшылықтар. Біздің түлектер әлемнің жетекші IT компанияларында жұмыс істейді және өз
+                    стартаптарын құрады.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="fade-in">
+                    <div class="w-14 h-14 flex items-center justify-center mb-6 bg-white bg-opacity-10 rounded-full">
+                        <i class="ri-global-line ri-xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Қашықтан Жұмыс</h3>
+                    <p class="text-gray-300">Әлемнің кез келген нүктесінен жұмыс істеу мүмкіндігі, географиялық
+                        шектеулерсіз.</p>
+                </div>
+                <div class="fade-in">
+                    <div class="w-14 h-14 flex items-center justify-center mb-6 bg-white bg-opacity-10 rounded-full">
+                        <i class="ri-money-dollar-circle-line ri-xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Жоғары Табыс</h3>
+                    <p class="text-gray-300">IT саласындағы мамандардың жалақысы басқа салалармен салыстырғанда
+                        әлдеқайда жоғары.</p>
+                </div>
+                <div class="fade-in">
+                    <div class="w-14 h-14 flex items-center justify-center mb-6 bg-white bg-opacity-10 rounded-full">
+                        <i class="ri-brain-line ri-xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Үздіксіз Даму</h3>
+                    <p class="text-gray-300">Жаңа технологияларды үйрену және кәсіби дағдыларды үнемі жетілдіру
+                        мүмкіндігі.</p>
+                </div>
+                <div class="fade-in">
+                    <div class="w-14 h-14 flex items-center justify-center mb-6 bg-white bg-opacity-10 rounded-full">
+                        <i class="ri-lightbulb-line ri-xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Шығармашылық</h3>
+                    <p class="text-gray-300">Күрделі мәселелерді шешу және инновациялық өнімдер жасау арқылы
+                        шығармашылық әлеуетті іске асыру.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Career Section -->
+    <section id="career" class="py-20 bg-white relative overflow-hidden">
+        <div class="absolute inset-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-5">
+                <source src="https://public.readdy.ai/gen_page/career_path.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 fade-in">
+                <span
+                    class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">Карьералық
+                    өсу</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Мансаптық Мүмкіндіктер</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Бағдарламашы мамандығы ұсынатын карьералық өсу
+                    жолдары. Біздің түлектер 6 айдан кейін жұмысқа орналасып, 2-3 жыл ішінде жоғары позицияларға
+                    көтеріледі.</p>
+            </div>
+            <div class="relative max-w-3xl mx-auto pl-8 border-l-2 border-gray-200">
+                <div class="mb-12 relative career-card fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-effect p-8 rounded-lg ml-6 hover-lift glow">
+                        <h3 class="text-xl font-semibold mb-2">Junior Әзірлеуші</h3>
+                        <p class="text-gray-600 mb-4">Мансаптың бастапқы кезеңі. Негізгі міндеттер: қарапайым
+                            функционалды әзірлеу, кодты тестілеу, тәжірибелі әріптестерден үйрену.</p>
+                        <div class="text-sm text-gray-500">Орташа жалақы: 400,000 - 700,000 ₸</div>
+                    </div>
+                </div>
+                <div class="mb-12 relative career-card fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-effect p-8 rounded-lg ml-6 hover-lift glow">
+                        <h3 class="text-xl font-semibold mb-2">Middle Әзірлеуші</h3>
+                        <p class="text-gray-600 mb-4">Өз бетінше күрделі міндеттерді шеше алатын маман. Жобаның белгілі
+                            бір бөліктерін жасауға жауап береді.</p>
+                        <div class="text-sm text-gray-500">Орташа жалақы: 700,000 - 1,200,000 ₸</div>
+                    </div>
+                </div>
+                <div class="mb-12 relative career-card fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-effect p-8 rounded-lg ml-6 hover-lift glow">
+                        <h3 class="text-xl font-semibold mb-2">Senior Әзірлеуші</h3>
+                        <p class="text-gray-600 mb-4">Жоғары білікті маман. Архитектуралық шешімдер қабылдайды, жас
+                            мамандарға менторлық жасайды, күрделі техникалық мәселелерді шешеді.</p>
+                        <div class="text-sm text-gray-500">Орташа жалақы: 1,200,000 - 2,000,000 ₸</div>
+                    </div>
+                </div>
+                <div class="mb-12 relative career-card fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-effect p-8 rounded-lg ml-6 hover-lift glow">
+                        <h3 class="text-xl font-semibold mb-2">Техникалық Жетекші / Team Lead</h3>
+                        <p class="text-gray-600 mb-4">Әзірлеушілер командасын басқарады, техникалық шешімдерді
+                            үйлестіреді, жобаның сапасына жауап береді.</p>
+                        <div class="text-sm text-gray-500">Орташа жалақы: 1,800,000 - 2,500,000 ₸</div>
+                    </div>
+                </div>
+                <div class="relative career-card fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-effect p-8 rounded-lg ml-6 hover-lift glow">
+                        <h3 class="text-xl font-semibold mb-2">CTO / Техникалық Директор</h3>
+                        <p class="text-gray-600 mb-4">Компанияның техникалық стратегиясын анықтайды, инновациялық
+                            шешімдерді енгізеді, IT бөлімінің жұмысын басқарады.</p>
+                        <div class="text-sm text-gray-500">Орташа жалақы: 2,500,000 ₸ және одан жоғары</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Байланысқа Шығыңыз</h2>
+                    <p class="text-lg text-gray-600">Сұрақтарыңыз бар ма? Бізге хабарласыңыз, біз сізге көмектесуге
+                        дайынбыз.</p>
+                </div>
+                <form class="glass-effect p-10 rounded-xl shadow-lg fade-in hover-lift">
+                    <div class="mb-6">
+                        <label for="name" class="block text-gray-700 mb-2">Аты-жөніңіз</label>
+                        <input type="text" id="name"
+                            class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary"
+                            placeholder="Аты-жөніңізді енгізіңіз">
+                    </div>
+                    <div class="mb-6">
+                        <label for="email" class="block text-gray-700 mb-2">Электрондық пошта</label>
+                        <input type="email" id="email"
+                            class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary"
+                            placeholder="email@example.com">
+                    </div>
+                    <div class="mb-6">
+                        <label for="subject" class="block text-gray-700 mb-2">Тақырып</label>
+                        <input type="text" id="subject"
+                            class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary"
+                            placeholder="Хабарламаның тақырыбы">
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-700 mb-2">Хабарлама</label>
+                        <textarea id="message" rows="5"
+                            class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary"
+                            placeholder="Хабарламаңызды жазыңыз"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-primary text-white py-3 !rounded-button whitespace-nowrap hover:bg-gray-800 transition-colors">Жіберу</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="font-['Pacifico'] text-2xl text-white mb-2">logo</div>
+                    <p class="text-gray-400">Бағдарламашы мамандығы туралы ақпараттық портал</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-12">
+                    <div class="mb-6 md:mb-0">
+                        <h4 class="text-lg font-semibold mb-4">Навигация</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#intro" class="text-gray-400 hover:text-white transition-colors">Кіріспе</a>
+                            </li>
+                            <li><a href="#skills" class="text-gray-400 hover:text-white transition-colors">Дағдылар</a>
+                            </li>
+                            <li><a href="#benefits"
+                                    class="text-gray-400 hover:text-white transition-colors">Артықшылықтар</a></li>
+                            <li><a href="#career" class="text-gray-400 hover:text-white transition-colors">Мансап</a>
+                            </li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Байланыс</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Байланыс</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <span class="text-gray-400">maksotajsa415@gmail.com</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span class="text-gray-400">+7 (776) 075 81 63</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <span class="text-gray-400">Атырау қ., Қазақстан</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Бағдарламашы Мамандығы. Барлық құқықтар қорғалған.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-all duration-300 social-icon">
+                        <i class="ri-facebook-fill text-white"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-all duration-300 social-icon">
+                        <i class="ri-twitter-x-fill text-white"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-all duration-300 social-icon">
+                        <i class="ri-instagram-line text-white"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-all duration-300 social-icon">
+                        <i class="ri-linkedin-fill text-white"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Enhanced fade-in animation with delay
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100); // Staggered delay
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                    // Close mobile menu if open
+                    const mobileMenu = document.querySelector('.fixed.inset-0.bg-white');
+                    if (mobileMenu && mobileMenu.style.display === 'flex') {
+                        mobileMenu.style.display = 'none';
+                    }
+                });
+            });
+            // Mobile menu toggle
+            const menuButton = document.querySelector('.md\\:hidden');
+            const mobileMenu = document.querySelector('.fixed.inset-0.bg-white');
+            menuButton.addEventListener('click', function () {
+                if (mobileMenu.style.display === 'flex') {
+                    mobileMenu.style.display = 'none';
+                } else {
+                    mobileMenu.style.display = 'flex';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
